@@ -1,0 +1,198 @@
+/* 사라진 인천을 찾아서 — 스타일 (무대 1920×1080을 화면에 맞춰 확대·축소) */
+:root{
+  --ink:#2f3a44; --paper:#fffaf2; --accent:#e0724f; --teal:#3f8f80; --teal2:#5fa99b;
+  --gold:#f4b942; --navy:#3f6f8f; --soft:#fff3e2; --shadow:0 10px 30px rgba(40,30,40,.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#2b2a36;overflow:hidden;font-family:'Gowun Dodum','Noto Sans KR',system-ui,sans-serif;color:var(--ink);-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font-family:inherit;color:inherit}
+b,strong{font-family:'Jua','Gowun Dodum',sans-serif;font-weight:normal;color:#b4553a}
+.jua{font-family:'Jua','Gowun Dodum',sans-serif}
+
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:#f5ecdf;user-select:none}
+#bgwrap img{position:absolute;inset:0;width:1920px;height:1080px;object-fit:cover;transition:opacity .9s ease}
+#bgB{opacity:0}
+
+/* 캐릭터 */
+.char{position:absolute;width:760px;height:1000px;bottom:-40px;transition:left .5s ease,opacity .45s ease,transform .3s ease;opacity:0;pointer-events:none;filter:drop-shadow(0 10px 14px rgba(0,0,0,.18))}
+.char.on{opacity:1}
+.char.float{animation:float 3.2s ease-in-out infinite}
+.char.hop{animation:hop .35s ease}
+@keyframes float{50%{transform:translateY(-18px)}}
+@keyframes hop{40%{transform:translateY(-36px)}}
+
+/* 상단 정보 */
+#hud{position:absolute;top:18px;left:22px;right:22px;display:flex;gap:12px;align-items:center;z-index:20;transition:opacity .3s}
+#hud .spacer{flex:1}
+.pill{background:rgba(255,250,242,.95);border-radius:999px;padding:12px 28px;font-family:'Jua',sans-serif;font-size:32px;box-shadow:0 3px 12px rgba(0,0,0,.14);border:3px solid #fff;white-space:nowrap}
+.pill.step{color:var(--accent)}
+.pill.btn{cursor:pointer}
+.pill.btn:hover{background:#fff1d6;border-color:var(--gold)}
+#noteCount{display:inline-block;min-width:44px;background:var(--accent);color:#fff;border-radius:999px;padding:0 10px;margin-left:6px;text-align:center}
+.hidden{opacity:0;pointer-events:none}
+
+/* 장소 카드 */
+#placecard{position:absolute;left:50%;top:150px;transform:translateX(-50%);z-index:25;pointer-events:none}
+.pc{background:var(--paper);border:5px solid #fff;border-radius:34px;padding:34px 90px 40px;text-align:center;box-shadow:var(--shadow);animation:pc 3.2s ease forwards}
+.pc .s{font-family:'Jua';font-size:36px;color:var(--accent)}
+.pc .n{font-family:'Jua';font-size:66px;margin:6px 0}
+.pc .t{font-size:34px;color:var(--teal)}
+@keyframes pc{0%{opacity:0;transform:translateY(-30px)}12%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0;transform:translateY(-20px)}}
+
+/* 대화창 */
+#textbox{position:absolute;left:36px;right:36px;bottom:26px;height:320px;background:rgba(255,250,242,.96);border:5px solid #fff;border-radius:44px;box-shadow:var(--shadow);padding:66px 96px 40px;z-index:30;cursor:pointer;transition:opacity .25s}
+#namebox{position:absolute;top:-38px;left:60px;background:var(--accent);color:#fff;font-family:'Jua';font-size:40px;padding:8px 38px;border-radius:22px;border:4px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+#namebox:empty{display:none}
+#namebox.riri{background:var(--teal2)} #namebox.me{background:#7d8fd6} #namebox.minjun{background:#6c7dc4}
+#namebox.grandma{background:#9c7fb8} #namebox.curator{background:var(--navy)}
+#text{font-size:46px;line-height:1.6;word-break:keep-all}
+#text.narr{color:#5c5a6e}
+#ctc{position:absolute;right:48px;bottom:26px;font-size:34px;color:var(--accent);animation:bob 1s infinite}
+@keyframes bob{50%{transform:translateY(8px);opacity:.4}}
+
+/* 오버레이(선택지·게임·모달) */
+#overlay{position:absolute;inset:0;z-index:40;pointer-events:none}
+#overlay>*{pointer-events:auto}
+.dim{position:absolute;inset:0;background:rgba(43,42,54,.45);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+.q{background:var(--teal2);color:#fff;border:5px solid #fff;border-radius:30px;padding:22px 60px;font-family:'Jua';font-size:46px;max-width:1600px;text-align:center;box-shadow:var(--shadow)}
+.q small{display:block;font-size:32px;color:#fff3c4;margin-bottom:4px}
+.opt{width:1500px;display:flex;gap:26px;align-items:center;background:var(--paper);border:5px solid #fff;border-radius:30px;padding:22px 44px;font-size:40px;text-align:left;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.14);transition:transform .12s,background .12s;word-break:keep-all;line-height:1.45}
+.opt:hover,.opt:focus{transform:translateY(-4px);background:#fff1d6;border-color:var(--gold);outline:none}
+.num{flex:none;width:70px;height:70px;border-radius:50%;background:var(--gold);color:#fff;font-family:'Jua';font-size:40px;display:flex;align-items:center;justify-content:center;border:4px solid #fff}
+
+.card{background:var(--paper);border:6px solid #fff;border-radius:44px;box-shadow:var(--shadow);padding:60px 100px;text-align:center;max-width:1520px;animation:pop .28s ease}
+@keyframes pop{from{opacity:0;transform:scale(.9)}}
+.card h2{font-family:'Jua';font-weight:normal;font-size:66px;margin-bottom:18px}
+.card p{font-size:40px;line-height:1.65;word-break:keep-all}
+.tags{display:flex;gap:14px;justify-content:center;margin:10px 0 22px;flex-wrap:wrap}
+.tag{font-family:'Jua';font-size:34px;padding:8px 26px;border-radius:999px;background:#e3f3ee;color:#2f7a6c}
+.tag.warn{background:#fde6df;color:#b4553a}
+.big{font-family:'Jua';font-size:44px;background:var(--accent);color:#fff;border:none;border-radius:26px;padding:20px 64px;margin-top:30px;cursor:pointer;box-shadow:0 6px 0 #c2593c;transition:transform .08s}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #c2593c}
+.big.sub{background:#a9a2b8;box-shadow:0 6px 0 #857e94;font-size:36px}
+.big.teal{background:var(--teal2);box-shadow:0 6px 0 #3f7f72}
+.big:disabled{opacity:.45;cursor:not-allowed}
+
+/* 증거 카드 */
+.clue{width:600px;background:#fffdf5;border:6px solid var(--gold);border-radius:30px;padding:30px 38px;text-align:left;box-shadow:var(--shadow);position:relative}
+.clue .h{font-family:'Jua';font-size:40px;color:#b4553a;margin-bottom:8px}
+.clue .b{font-size:32px;line-height:1.55}
+.clue .src{font-size:26px;color:#8a7f73;margin-top:12px}
+.stamp{position:absolute;right:-30px;top:-40px;background:var(--accent);color:#fff;font-family:'Jua';font-size:32px;padding:12px 22px;border-radius:18px;transform:rotate(12deg);animation:stamp .5s ease}
+@keyframes stamp{from{transform:rotate(12deg) scale(2.2);opacity:0}}
+
+/* 수첩·지도 모달 */
+.modal{position:absolute;inset:60px 80px;background:var(--paper);border:6px solid #fff;border-radius:44px;box-shadow:var(--shadow);padding:44px 60px;display:flex;flex-direction:column;animation:pop .25s}
+.modal h2{font-family:'Jua';font-weight:normal;font-size:56px;color:var(--accent)}
+.modal .x{position:absolute;right:40px;top:30px}
+.notes{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:24px 8px}
+.notes .clue{width:auto}
+.notes .empty{grid-column:1/-1;font-size:40px;color:#8a7f73;text-align:center;padding-top:120px}
+.mapwrap{position:relative;flex:1;border-radius:30px;overflow:hidden;margin-top:16px}
+.mapwrap img{width:100%;height:100%;object-fit:cover}
+.pin{position:absolute;transform:translate(-50%,-100%);font-family:'Jua';font-size:28px;text-align:center;white-space:nowrap}
+.pin i{display:block;width:44px;height:44px;margin:4px auto 0;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#c9bfb2;border:4px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.2)}
+.pin.done i{background:var(--teal2)} .pin.now i{background:var(--accent);animation:bob 1s infinite}
+.pin span{background:rgba(255,250,242,.95);border-radius:14px;padding:4px 14px;border:2px solid #fff}
+
+/* 토스트 */
+#toast{position:absolute;left:50%;top:130px;transform:translateX(-50%);z-index:60;pointer-events:none}
+#toast div{background:#2f3a44;color:#fff;font-family:'Jua';font-size:36px;padding:16px 40px;border-radius:999px;animation:pc 2.2s ease forwards}
+
+/* 미니게임 공통 */
+.gbar{position:absolute;top:20px;left:40px;right:40px;background:var(--paper);border:5px solid #fff;border-radius:30px;padding:18px 44px;display:flex;gap:40px;align-items:center;font-family:'Jua';font-size:36px;box-shadow:var(--shadow)}
+.gbar .t{color:var(--accent);font-size:42px}
+.gbar .spacer{flex:1}
+.stagebox{position:absolute;left:160px;top:150px;width:1600px;height:900px;border-radius:26px;overflow:hidden;border:6px solid #fff;box-shadow:var(--shadow);cursor:zoom-in}
+.stagebox img{width:100%;height:100%;display:block}
+.mark{position:absolute;border:8px solid var(--accent);border-radius:24px;background:rgba(224,114,79,.12);animation:pop .3s}
+.mark.info{border-color:var(--teal2);background:rgba(95,169,155,.12)}
+.miss{position:absolute;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:6px solid #8a7f73;animation:missfade .7s forwards}
+@keyframes missfade{to{opacity:0;transform:scale(1.8)}}
+.tip{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);background:rgba(47,58,68,.92);color:#fff;font-size:36px;padding:16px 40px;border-radius:24px;max-width:1500px;text-align:center;line-height:1.5}
+
+.sortcard{width:1300px;min-height:260px;background:#fffdf5;border:6px solid var(--gold);border-radius:36px;padding:44px 60px;font-size:46px;line-height:1.5;text-align:center;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;word-break:keep-all}
+.row{display:flex;gap:40px;justify-content:center}
+.sortbtn{font-family:'Jua';font-size:48px;width:420px;padding:26px;border-radius:30px;border:5px solid #fff;cursor:pointer;color:#fff;box-shadow:0 7px 0 rgba(0,0,0,.18)}
+.sortbtn.fact{background:var(--teal2)} .sortbtn.guess{background:#9c7fb8}
+.progress{font-family:'Jua';font-size:34px;color:#fff}
+
+.orderlist{display:flex;flex-direction:column;gap:16px;width:1500px}
+.ordercard{display:flex;gap:24px;align-items:center;background:var(--paper);border:5px solid #fff;border-radius:26px;padding:20px 36px;font-size:38px;cursor:pointer;box-shadow:0 5px 14px rgba(0,0,0,.12);text-align:left;line-height:1.4}
+.ordercard:hover{background:#fff1d6;border-color:var(--gold)}
+.ordercard.picked{background:#e3f3ee;border-color:var(--teal2);cursor:default}
+.ordercard.bad{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-14px)}75%{transform:translateX(14px)}}
+.ordercard .num{background:#c9bfb2}
+.ordercard.picked .num{background:var(--teal2)}
+
+.memgrid{display:grid;grid-template-columns:repeat(4,330px);gap:20px}
+.mem{height:200px;perspective:900px;cursor:pointer}
+.mem .in{position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+.mem.flip .in,.mem.ok .in{transform:rotateY(180deg)}
+.mem .f,.mem .bk{position:absolute;inset:0;border-radius:24px;border:5px solid #fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;backface-visibility:hidden;box-shadow:0 5px 14px rgba(0,0,0,.15)}
+.mem .bk{background:var(--navy);color:#fff;font-family:'Jua';font-size:70px}
+.mem .f{background:#fffdf5;transform:rotateY(180deg);font-size:32px;line-height:1.35}
+.mem .f b{font-size:36px}
+.mem.ok .f{background:#e3f3ee;border-color:var(--teal2)}
+
+.pickgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:1600px}
+.pick{background:var(--paper);border:5px solid #fff;border-radius:26px;padding:24px 34px;font-size:36px;text-align:left;cursor:pointer;line-height:1.45;box-shadow:0 5px 14px rgba(0,0,0,.12);word-break:keep-all}
+.pick:hover{border-color:var(--gold)}
+.pick.on{background:#fff1d6;border-color:var(--accent)}
+.pick.good{background:#e3f3ee;border-color:var(--teal2)}
+.pick.badq{background:#fde6df;border-color:#d0664c}
+
+.checkrow{display:flex;gap:20px;align-items:center;width:1600px;background:var(--paper);border:5px solid #fff;border-radius:26px;padding:16px 30px;box-shadow:0 5px 14px rgba(0,0,0,.12)}
+.checkrow .s{flex:1;font-size:36px;line-height:1.45;word-break:keep-all}
+.ox{font-family:'Jua';font-size:36px;width:190px;white-space:nowrap;height:84px;border-radius:22px;border:4px solid #fff;cursor:pointer;background:#ece6dc;color:#8a7f73}
+.ox.o.on{background:var(--teal2);color:#fff} .ox.x.on{background:#d0664c;color:#fff}
+.checkrow.right{background:#e3f3ee} .checkrow.wrong{background:#fde6df}
+.checkrow .why{font-size:30px;color:#6b5a4a;margin-top:6px}
+
+/* 안내판 쓰기 */
+.writebox{background:var(--paper);border:6px solid #fff;border-radius:40px;padding:40px 60px;width:1600px;box-shadow:var(--shadow)}
+.writebox h2{font-family:'Jua';font-weight:normal;font-size:52px;color:var(--accent);margin-bottom:10px}
+.writebox select,.writebox textarea{width:100%;font-size:38px;border:4px solid #f3c9b3;border-radius:22px;padding:16px 22px;background:#fff;margin-top:12px}
+.writebox textarea{height:190px;resize:none;line-height:1.5}
+.writebox label{font-size:34px;display:flex;gap:14px;align-items:center;margin-top:16px;cursor:pointer}
+.writebox label input{width:40px;height:40px}
+.hintline{font-size:30px;color:#8a7f73;margin-top:8px}
+
+/* 타이틀 */
+.title{position:absolute;inset:0;display:flex;align-items:center;padding-left:110px;background:linear-gradient(90deg,rgba(255,250,242,.2),rgba(255,250,242,0))}
+.title .card{text-align:center;width:1180px;padding:56px 80px}
+.title h1{font-family:'Jua';font-weight:normal;font-size:104px;color:var(--accent);line-height:1.1;text-shadow:4px 4px 0 #fff}
+.title .sub{font-size:44px;margin:14px 0 22px}
+.title input{font-size:44px;text-align:center;width:640px;padding:16px;border-radius:24px;border:4px solid #f3c9b3;margin-top:10px;background:#fff}
+.chips{display:flex;gap:14px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.chip{font-size:34px;padding:10px 26px;border-radius:999px;border:4px solid #fff;background:#fff1d6;cursor:pointer}
+.chip:hover{border-color:var(--gold)}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.badges span{font-size:30px;background:#e3f3ee;color:#2f7a6c;border-radius:999px;padding:6px 20px}
+
+/* 인증서 */
+.cert{width:1500px;background:#fffdf5;border:14px double var(--gold);border-radius:30px;padding:50px 80px;text-align:center;box-shadow:var(--shadow);animation:pop .3s}
+.cert h1{font-family:'Jua';font-weight:normal;font-size:78px;color:var(--accent)}
+.cert .rank{font-family:'Jua';font-size:60px;color:var(--teal);margin:6px 0}
+.cert p{font-size:38px;line-height:1.6;word-break:keep-all}
+.cert .quote{background:#fff3e2;border-radius:24px;padding:18px 30px;margin:18px 0;font-size:38px}
+.cert .stats{display:flex;gap:18px;justify-content:center;margin:14px 0}
+.cert .stats span{font-family:'Jua';font-size:34px;background:#e3f3ee;border-radius:999px;padding:8px 24px;color:#2f7a6c}
+.cert .msg{font-family:'Jua';font-size:42px;color:#3f6f8f;margin-top:10px}
+
+#rotate{display:none}
+@media (orientation:portrait) and (max-width:820px){
+  #rotate{display:flex;position:fixed;inset:auto 0 0 0;z-index:99;background:#e0724f;color:#fff;font-size:18px;justify-content:center;padding:10px;font-family:'Jua'}
+}
+#print-area{display:none}
+@media print{
+  body{background:#fff;overflow:visible}
+  #stage,#rotate{display:none!important}
+  #print-area{display:block}
+  #print-area .cert{width:auto;box-shadow:none;animation:none;font-size:14pt}
+  #print-area .cert h1{font-size:32pt} #print-area .cert .rank{font-size:24pt}
+  #print-area .cert p,#print-area .cert .quote{font-size:15pt} #print-area .cert .stats span{font-size:13pt}
+  #print-area .cert .msg{font-size:16pt}
+}
